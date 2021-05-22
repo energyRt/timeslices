@@ -1,2 +1,2 @@
 # timeslices
-Most common set of time-slices with conversion functions from date-time format to strings and back
+Most common set of time-slices with functions to convert from date-time format to strings and back

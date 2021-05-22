@@ -1,0 +1,24 @@
+Package: timeslices
+Title: Time-slices for energy models
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Oleg",
+           family = "Lugovoy",
+           role = c("aut", "cre"),
+           email = "olugovoy@gmail.com",
+           comment = c(ORCID = "0000-0001-5546-9875"))
+Description: Most common set of time-slices with functions to convert from date-time format to strings and back.
+License: AGPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    lubridate,
+    purrr,
+    stringr,
+    tibble,
+    tidyr
+Depends: 
+    R (>= 2.10)
