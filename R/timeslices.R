@@ -41,7 +41,7 @@ tsl_sets <- list(
 #' Convert date-time objects to time-slice
 #'
 #' @param dtm vector of timepoints in Date format
-#' @param type character, type of the slices
+#' @param format character, format of the slices
 #' @param d366.as.na logical, if
 #'
 #' @return
@@ -52,22 +52,22 @@ tsl_sets <- list(
 #' dtm2tsl(lubridate::now())
 #' dtm2tsl(lubridate::ymd("2020-12-31"))
 #' dtm2tsl(lubridate::ymd("2020-12-31"), d366.as.na = F)
-#' dtm2tsl(lubridate::now(tzone = "UTC"), type = "d365")
-#' dtm2tsl(lubridate::ymd("2020-12-31"), type = "d365")
-#' dtm2tsl(lubridate::ymd("2020-12-31"), type = "d365", d366.as.na = F)
-#' dtm2tsl(lubridate::ymd("2020-12-31"), type = "d366")
-dtm2tsl <- function(dtm, type = "d365_h24", d366.as.na = grepl("d365", type)) {
+#' dtm2tsl(lubridate::now(tzone = "UTC"), format = "d365")
+#' dtm2tsl(lubridate::ymd("2020-12-31"), format = "d365")
+#' dtm2tsl(lubridate::ymd("2020-12-31"), format = "d365", d366.as.na = F)
+#' dtm2tsl(lubridate::ymd("2020-12-31"), format = "d366")
+dtm2tsl <- function(dtm, format = "d365_h24", d366.as.na = grepl("d365", format)) {
   stopifnot(is.timepoint(dtm))
-  if (type == "d365_h24" | type == "d366_h24") {
+  if (format == "d365_h24" | format == "d366_h24") {
     x <- paste0("d", formatC(yday(dtm), width = 3, flag = "0"), "_",
                 "h", formatC(hour(dtm), width = 2, flag = "0"))
-  } else if (type == "d365" | type == "d366") {
+  } else if (format == "d365" | format == "d366") {
     x <- paste0("d", formatC(yday(dtm), width = 3, flag = "0"))
-  } else if (type == "y_d365_h24" | type == "y_d366_h24") {
+  } else if (format == "y_d365_h24" | format == "y_d366_h24") {
     x <- paste0("y", formatC(year(dtm), width = 4, flag = "0"), "_",
                 "d", formatC(yday(dtm), width = 3, flag = "0"), "_",
                 "h", formatC(hour(dtm), width = 2, flag = "0"))
-  } else if (type == "m12_h24") {
+  } else if (format == "m12_h24") {
     x <- paste0("m", formatC(month(dtm), width = 2, flag = "0"), "_",
                 "h", formatC(hour(dtm), width = 2, flag = "0"))
   }
@@ -86,7 +86,7 @@ if (F) {
 #' Convert time-slices to date-time, extract year, month, day of the year, or hour
 #'
 #' @param tsl character vector with time-slices
-#' @param type character, type of the slices
+#' @param format character, format of the slices
 #' @param tmz time-zone
 #' @param year year, used when time-slices don't store year
 #' @param mday day of month, for time slices without the information
@@ -105,14 +105,14 @@ if (F) {
 #' tsl2dtm(tsl[3], year = 2010)
 #' tsl2dtm(tsl[4], year = 1900)
 #' tsl2dtm(tsl[3:4], year = 1900)
-tsl2dtm <- function(tsl, type = tsl_guess_format(tsl), tmz = "UTC",
+tsl2dtm <- function(tsl, format = tsl_guess_format(tsl), tmz = "UTC",
                     year = NULL, mday = NULL) {
-  if (is.null(type)) return(NULL)
+  if (is.null(format)) return(NULL)
   y <- NULL; m <- NULL; d <- NULL; h <- NULL
-  if (grepl("y", type)) y <- tsl2year(tsl)
-  if (grepl("m", type)) m <- tsl2month(tsl)
-  if (grepl("d", type)) d <- tsl2yday(tsl)
-  if (grepl("h", type)) h <- tsl2hour(tsl)
+  if (grepl("y", format)) y <- tsl2year(tsl)
+  if (grepl("m", format)) m <- tsl2month(tsl)
+  if (grepl("d", format)) d <- tsl2yday(tsl)
+  if (grepl("h", format)) h <- tsl2hour(tsl)
 
   # year
   if (is.null(y) || all(is.na(y))) {
@@ -126,13 +126,13 @@ tsl2dtm <- function(tsl, type = tsl_guess_format(tsl), tmz = "UTC",
     }
   }
 
-  if (type %in% c("d365_h24", "d366_h24", "y_d365_h24", "y_d366_h24")) {
+  if (format %in% c("d365_h24", "d366_h24", "y_d365_h24", "y_d366_h24")) {
     # yday-based
-    dtm <- lubridate::ymd_h(paste0(y, "-01-01 0"), tz = tmz) + days(d) + hours(h)
-  } else if (type %in% c("d365", "d366")) {
+    dtm <- lubridate::ymd_h(paste0(y, "-01-01 0"), tz = tmz) + days(d - 1) + hours(h)
+  } else if (format %in% c("d365", "d366")) {
     # yday, no-hours
-    dtm <- lubridate::ymd_h(paste0(y, "-01-01 0"), tz = tmz) + days(d)
-  } else if (type %in% c("m12_h24", "y_m12_h24")) {
+    dtm <- lubridate::ymd_h(paste0(y, "-01-01 0"), tz = tmz) + days(d - 1)
+  } else if (format %in% c("m12_h24", "y_m12_h24")) {
     # month-based
     if (is.null(mday)) return(NULL) # not enough info to create Date object
     dtm <- lubridate::ymd_h(paste0(y, "-", m,  "-", mday, " ", h), tz = tmz)
@@ -149,7 +149,7 @@ tsl2dtm <- function(tsl, type = tsl_guess_format(tsl), tmz = "UTC",
 #' @export
 #'
 #' @examples
-#' NULL
+#' tsl2year(tsl)
 tsl2year <- function(tsl, return.null = T) {
   # browser()
   # library(stringr)
@@ -171,7 +171,8 @@ tsl2year <- function(tsl, return.null = T) {
 #' @export
 #'
 #' @examples
-#' NULL
+#' tsl
+#' tsl2yday(tsl)
 tsl2yday <- function(tsl, return.null = T) {
   d <- str_extract(tsl, "d[0-9]++")
   if (return.null) {
@@ -190,7 +191,8 @@ tsl2yday <- function(tsl, return.null = T) {
 #' @export
 #'
 #' @examples
-#' NULL
+#' tsl
+#' tsl2hour(tsl)
 tsl2hour <- function(tsl, return.null = T) {
   h <- str_extract(tsl, "h[0-9]++")
   if (return.null) {
@@ -209,7 +211,8 @@ tsl2hour <- function(tsl, return.null = T) {
 #' @export
 #'
 #' @examples
-#' NULL
+#' tsl
+#' tsl2month(tsl)
 tsl2month <- function(tsl, return.null = T) {
   m <- str_extract(tsl, "m[0-9]++")
   if (return.null) {
@@ -246,29 +249,29 @@ tsl_guess_format <- function(tsl) {
   if (!any(ii)) return(NULL)
   jj <- y | m | d | h # check
 
-  type <- NULL
+  format <- NULL
   if (ny > 0) {
     if (!all(y == jj)) return(NULL)
-    type <- "y"
+    format <- "y"
   }
   if (nd > 0) {
     if (!all(d == jj)) return(NULL)
     dd <- ifelse(any(grepl("366", tsl[ii])), 366, 365)
-    type <- paste0(type, ifelse(!is.null(type), "_", ""), "d", dd)
+    format <- paste0(format, ifelse(!is.null(format), "_", ""), "d", dd)
   }
   if (nm > 0) {
     if (!all(n == jj)) return(NULL)
     mm <- tsl2month(tsl[ii])
     if (min(mm) < 1 | max(mm) > 12) return(NULL)
-    type <- paste0(type, ifelse(!is.null(type), "_", ""), "m", 12)
+    format <- paste0(format, ifelse(!is.null(format), "_", ""), "m", 12)
   }
   if (nh > 0) {
     if (!all(h == jj)) return(NULL)
     hh <- tsl2hour(tsl[ii])
     if (min(hh, na.rm = T) < 0 | max(hh, na.rm = T) > 23) return(NULL)
-    type <- paste0(type, ifelse(!is.null(type), "_", ""), "h", 24)
+    format <- paste0(format, ifelse(!is.null(format), "_", ""), "h", 24)
   }
-  return(type)
+  return(format)
 }
 
 
