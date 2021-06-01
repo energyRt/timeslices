@@ -10,7 +10,7 @@
 \usage{
 tsl2dtm(
   tsl,
-  type = tsl_guess_format(tsl),
+  format = tsl_guess_format(tsl),
   tmz = "UTC",
   year = NULL,
   mday = NULL
@@ -27,7 +27,7 @@ tsl2month(tsl, return.null = T)
 \arguments{
 \item{tsl}{character vector with time-slices}
 
-\item{type}{character, type of the slices}
+\item{format}{character, format of the slices}
 
 \item{tmz}{time-zone}
 
@@ -72,8 +72,11 @@ tsl2dtm(tsl[4])
 tsl2dtm(tsl[3], year = 2010)
 tsl2dtm(tsl[4], year = 1900)
 tsl2dtm(tsl[3:4], year = 1900)
-NULL
-NULL
-NULL
-NULL
+tsl2year(tsl)
+tsl
+tsl2yday(tsl)
+tsl
+tsl2hour(tsl)
+tsl
+tsl2month(tsl)
 }

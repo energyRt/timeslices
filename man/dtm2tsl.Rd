@@ -4,12 +4,12 @@
 \alias{dtm2tsl}
 \title{Convert date-time objects to time-slice}
 \usage{
-dtm2tsl(dtm, type = "d365_h24", d366.as.na = grepl("d365", type))
+dtm2tsl(dtm, format = "d365_h24", d366.as.na = grepl("d365", format))
 }
 \arguments{
 \item{dtm}{vector of timepoints in Date format}
 
-\item{type}{character, type of the slices}
+\item{format}{character, format of the slices}
 
 \item{d366.as.na}{logical, if}
 }
@@ -23,8 +23,8 @@ Convert date-time objects to time-slice
 dtm2tsl(lubridate::now())
 dtm2tsl(lubridate::ymd("2020-12-31"))
 dtm2tsl(lubridate::ymd("2020-12-31"), d366.as.na = F)
-dtm2tsl(lubridate::now(tzone = "UTC"), type = "d365")
-dtm2tsl(lubridate::ymd("2020-12-31"), type = "d365")
-dtm2tsl(lubridate::ymd("2020-12-31"), type = "d365", d366.as.na = F)
-dtm2tsl(lubridate::ymd("2020-12-31"), type = "d366")
+dtm2tsl(lubridate::now(tzone = "UTC"), format = "d365")
+dtm2tsl(lubridate::ymd("2020-12-31"), format = "d365")
+dtm2tsl(lubridate::ymd("2020-12-31"), format = "d365", d366.as.na = F)
+dtm2tsl(lubridate::ymd("2020-12-31"), format = "d366")
 }

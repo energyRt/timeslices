@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">timeslices</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@
     <p>Convert date-time objects to time-slice</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='va'>dtm</span>, type <span class='op'>=</span> <span class='st'>"d365_h24"</span>, d366.as.na <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"d365"</span>, <span class='va'>type</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='va'>dtm</span>, format <span class='op'>=</span> <span class='st'>"d365_h24"</span>, d366.as.na <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"d365"</span>, <span class='va'>format</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,8 +132,8 @@
       <td><p>vector of timepoints in Date format</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>character, type of the slices</p></td>
+      <th>format</th>
+      <td><p>character, format of the slices</p></td>
     </tr>
     <tr>
       <th>d366.as.na</th>
@@ -147,12 +147,12 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/now.html'>now</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "d141_h22"</div><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2020-12-31"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "d152_h00"</div><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2020-12-31"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] NA</div><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2020-12-31"</span><span class='op'>)</span>, d366.as.na <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "d366_h00"</div><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/now.html'>now</a></span><span class='op'>(</span>tzone <span class='op'>=</span> <span class='st'>"UTC"</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"d365"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "d142"</div><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2020-12-31"</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"d365"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] NA</div><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2020-12-31"</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"d365"</span>, d366.as.na <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "d366"</div><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2020-12-31"</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"d366"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "d366_h00"</div><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/now.html'>now</a></span><span class='op'>(</span>tzone <span class='op'>=</span> <span class='st'>"UTC"</span><span class='op'>)</span>, format <span class='op'>=</span> <span class='st'>"d365"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "d152"</div><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2020-12-31"</span><span class='op'>)</span>, format <span class='op'>=</span> <span class='st'>"d365"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] NA</div><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2020-12-31"</span><span class='op'>)</span>, format <span class='op'>=</span> <span class='st'>"d365"</span>, d366.as.na <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "d366"</div><div class='input'><span class='fu'>dtm2tsl</span><span class='op'>(</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2020-12-31"</span><span class='op'>)</span>, format <span class='op'>=</span> <span class='st'>"d366"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "d366"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

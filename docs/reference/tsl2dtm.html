@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">timeslices</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
 
     <pre class="usage"><span class='fu'>tsl2dtm</span><span class='op'>(</span>
   <span class='va'>tsl</span>,
-  type <span class='op'>=</span> <span class='fu'><a href='tsl_guess_format.html'>tsl_guess_format</a></span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>)</span>,
+  format <span class='op'>=</span> <span class='fu'><a href='tsl_guess_format.html'>tsl_guess_format</a></span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>)</span>,
   tmz <span class='op'>=</span> <span class='st'>"UTC"</span>,
   year <span class='op'>=</span> <span class='cn'>NULL</span>,
   mday <span class='op'>=</span> <span class='cn'>NULL</span>
@@ -146,8 +146,8 @@
       <td><p>character vector with time-slices</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>character, type of the slices</p></td>
+      <th>format</th>
+      <td><p>character, format of the slices</p></td>
     </tr>
     <tr>
       <th>tmz</th>
@@ -191,18 +191,24 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>tsl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"y2007_d365_h15"</span>, <span class='cn'>NA</span>, <span class='st'>"d151_h22"</span>, <span class='st'>"d001"</span>, <span class='st'>"m10_h12"</span><span class='op'>)</span>
 <span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "2008-01-01 15:00:00 UTC"</div><div class='input'><span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning:  1 failed to parse.</span></div><div class='output co'>#&gt; [1] "2008-01-01 15:00:00 UTC" NA                       </div><div class='input'><span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "2007-12-31 15:00:00 UTC"</div><div class='input'><span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning:  1 failed to parse.</span></div><div class='output co'>#&gt; [1] "2007-12-31 15:00:00 UTC" NA                       </div><div class='input'><span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span>, year <span class='op'>=</span> <span class='fl'>2010</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "2010-06-01 22:00:00 UTC"</div><div class='input'><span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>]</span>, year <span class='op'>=</span> <span class='fl'>1900</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "1900-01-02 UTC"</div><div class='input'><span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>, year <span class='op'>=</span> <span class='fl'>1900</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='cn'>NULL</span>
-</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='cn'>NULL</span>
-</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='cn'>NULL</span>
-</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='cn'>NULL</span>
-</div><div class='output co'>#&gt; NULL</div></pre>
+</div><div class='output co'>#&gt; [1] "2010-05-31 22:00:00 UTC"</div><div class='input'><span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>]</span>, year <span class='op'>=</span> <span class='fl'>1900</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "1900-01-01 UTC"</div><div class='input'><span class='fu'>tsl2dtm</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>, year <span class='op'>=</span> <span class='fl'>1900</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'>tsl2year</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 2007   NA   NA   NA   NA</div><div class='input'><span class='va'>tsl</span>
+</div><div class='output co'>#&gt; [1] "y2007_d365_h15" NA               "d151_h22"       "d001"          
+#&gt; [5] "m10_h12"       </div><div class='input'><span class='fu'>tsl2yday</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 365  NA 151   1  NA</div><div class='input'><span class='va'>tsl</span>
+</div><div class='output co'>#&gt; [1] "y2007_d365_h15" NA               "d151_h22"       "d001"          
+#&gt; [5] "m10_h12"       </div><div class='input'><span class='fu'>tsl2hour</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 15 NA 22 NA 12</div><div class='input'><span class='va'>tsl</span>
+</div><div class='output co'>#&gt; [1] "y2007_d365_h15" NA               "d151_h22"       "d001"          
+#&gt; [5] "m10_h12"       </div><div class='input'><span class='fu'>tsl2month</span><span class='op'>(</span><span class='va'>tsl</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] NA NA NA NA 10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
