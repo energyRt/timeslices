@@ -34,9 +34,13 @@ tsl_sets <- list(
     HOUR = paste0("h", formatC(0:23, width = 2, flag = "0"))),
   d366_h24 = list(
     YDAY = paste0("d", formatC(1:366, width = 3, flag = "0")),
+    HOUR = paste0("h", formatC(0:23, width = 2, flag = "0"))),
+  m12_h24 = list(
+    MONTH = paste0("d", formatC(1:12, width = 3, flag = "0")),
     HOUR = paste0("h", formatC(0:23, width = 2, flag = "0")))
 )
 # save(tsl, file = "data/tsl.RData")
+
 
 #' Convert date-time objects to time-slice
 #'
@@ -206,19 +210,34 @@ tsl2hour <- function(tsl, return.null = T) {
 #' @describeIn tsl2dtm Extract month from time-slices
 #'
 #' @param return.null logical, valid for the cased then all values are NA, then NULL will be returned if return.null = TRUE,
+#' @param tsl character vector with time slices
+#' @param format character, the time slices format
 #'
 #' @return
 #' @export
 #'
 #' @examples
-#' tsl
-#' tsl2month(tsl)
-tsl2month <- function(tsl, return.null = T) {
-  m <- str_extract(tsl, "m[0-9]++")
-  if (return.null) {
-    if (all(is.na(m))) return(NULL)
+#' tsl2month(c("d001_h00", "d151_h22", "d365_h23"))
+#' tsl2month(c("m01_h12", "m05_h02", "m10_h01"))
+tsl2month <- function(tsl, format = tsl_guess_format(tsl), return.null = T) {
+  # browser()
+  if (grepl("m[0-9]+", format)) { # has month
+    m <- str_extract(tsl, "m[0-9]+")
+    if (return.null) {
+      if (all(is.na(m))) return(NULL)
+    }
+    m <- str_sub(m, 2, 3)
+  } else if (format == "d365_h24") {
+    # yday2month <- function(x) {
+      dy_int <- cumsum(
+        days_in_month(ymd("2001-01-15") + days(seq(0, 349, by = 30)))
+      )
+      yd <- tsl2yday(tsl)
+      m <- cut(yd, c(0, dy_int), labels = 1:12)
+    # }
+  } else {
+    return(NULL)
   }
-  m <- str_sub(m, 2, 3)
   m <- as.integer(m)
   return(m)
 }
@@ -237,6 +256,7 @@ tsl2month <- function(tsl, return.null = T) {
 #' tsl_guess_format(tsl[2])
 #' tsl_guess_format(tsl[3])
 #' tsl_guess_format(tsl[4])
+#' tsl_guess_format(tsl[5])
 
 tsl_guess_format <- function(tsl) {
   # browser()
@@ -260,8 +280,10 @@ tsl_guess_format <- function(tsl) {
     format <- paste0(format, ifelse(!is.null(format), "_", ""), "d", dd)
   }
   if (nm > 0) {
-    if (!all(n == jj)) return(NULL)
-    mm <- tsl2month(tsl[ii])
+    if (!all(m == jj)) return(NULL)
+    # mm <- tsl2month(tsl[ii])
+    mm <- str_extract(tsl, "m[0-9]+")
+    mm <- as.integer(gsub("m", "", mm))
     if (min(mm) < 1 | max(mm) > 12) return(NULL)
     format <- paste0(format, ifelse(!is.null(format), "_", ""), "m", 12)
   }

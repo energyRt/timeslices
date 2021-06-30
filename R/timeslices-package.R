@@ -3,6 +3,7 @@
 
 ## usethis namespace: start
 #' @importFrom lubridate days
+#' @importFrom lubridate days_in_month
 #' @importFrom lubridate hour
 #' @importFrom lubridate hours
 #' @importFrom lubridate is.timepoint
