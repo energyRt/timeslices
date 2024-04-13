@@ -7,39 +7,40 @@
 #'   ...
 #' }
 "tsl_formats"
-tsl_formats <- c(
-  "d365", "d366",
-  "d365_h24", "d366_h24",
-
-  "y_d365", "y_d366",
-  "y_d365_h24", "y_d366_h24",
-
-  "m12_h24",
-  "y_m12_h24"
-
-)
-# save(tsl_formats, file = "data/tsl_formats.RData")
+# tsl_formats <- c(
+#   "d365", "d366",
+#   "d365_h24", "d366_h24",
+#
+#   "y_d365", "y_d366",
+#   "y_d365_h24", "y_d366_h24",
+#
+#   "m12_h24",
+#   "y_m12_h24"
+#
+# )
+# # save(tsl_formats, file = "data/tsl_formats.RData")
 
 #' Sets of the common formats with structure
 #'
 #' @rdname tsl_formats
 #'
-tsl_sets <- list(
-  d365 = list(
-    YDAY = paste0("d", formatC(1:365, width = 3, flag = "0"))),
-  d366 = list(
-    YDAY = paste0("d", formatC(1:366, width = 3, flag = "0"))),
-  d365_h24 = list(
-    YDAY = paste0("d", formatC(1:365, width = 3, flag = "0")),
-    HOUR = paste0("h", formatC(0:23, width = 2, flag = "0"))),
-  d366_h24 = list(
-    YDAY = paste0("d", formatC(1:366, width = 3, flag = "0")),
-    HOUR = paste0("h", formatC(0:23, width = 2, flag = "0"))),
-  m12_h24 = list(
-    MONTH = paste0("d", formatC(1:12, width = 3, flag = "0")),
-    HOUR = paste0("h", formatC(0:23, width = 2, flag = "0")))
-)
-# save(tsl, file = "data/tsl.RData")
+#'"tsl_sets"
+# tsl_sets <- list(
+#   d365 = list(
+#     YDAY = paste0("d", formatC(1:365, width = 3, flag = "0"))),
+#   d366 = list(
+#     YDAY = paste0("d", formatC(1:366, width = 3, flag = "0"))),
+#   d365_h24 = list(
+#     YDAY = paste0("d", formatC(1:365, width = 3, flag = "0")),
+#     HOUR = paste0("h", formatC(0:23, width = 2, flag = "0"))),
+#   d366_h24 = list(
+#     YDAY = paste0("d", formatC(1:366, width = 3, flag = "0")),
+#     HOUR = paste0("h", formatC(0:23, width = 2, flag = "0"))),
+#   m12_h24 = list(
+#     MONTH = paste0("d", formatC(1:12, width = 3, flag = "0")),
+#     HOUR = paste0("h", formatC(0:23, width = 2, flag = "0")))
+# )
+# save(tsl, file = "data/tsl_sets.RData")
 
 
 #' Convert date-time objects to time-slice

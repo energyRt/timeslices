@@ -3,7 +3,6 @@
 \docType{data}
 \name{tsl_formats}
 \alias{tsl_formats}
-\alias{tsl_sets}
 \title{Common formats of time-slices.}
 \format{
 A character vector with formats:
@@ -12,17 +11,11 @@ A character vector with formats:
 \item{d365_h24}{time slices with year-day numbers and hours, 8760 in total}
 ...
 }
-
-An object of class \code{list} of length 4.
 }
 \usage{
 tsl_formats
-
-tsl_sets
 }
 \description{
 Common formats of time-slices.
-
-Sets of the common formats with structure
 }
 \keyword{datasets}
