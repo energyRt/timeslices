@@ -8,7 +8,8 @@ tsl_formats <- c(
   "d364_h24", "d365_h24", "d366_h24",
 
   # "y_d365", "y_d366",
-  # "y_d365_h24", "y_d366_h24",
+  "y_d365_h24",
+  # "y_d366_h24",
 
   # representative month & 24 hours
   "m12_h24"

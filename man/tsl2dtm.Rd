@@ -22,12 +22,12 @@ tsl2yday(tsl, return.null = T)
 
 tsl2hour(tsl, return.null = T)
 
-tsl2month(tsl, return.null = T)
+tsl2month(tsl, format = tsl_guess_format(tsl), return.null = T)
 }
 \arguments{
-\item{tsl}{character vector with time-slices}
+\item{tsl}{character vector with time slices}
 
-\item{format}{character, format of the slices}
+\item{format}{character, the time slices format}
 
 \item{tmz}{time-zone}
 
@@ -39,29 +39,21 @@ tsl2month(tsl, return.null = T)
 }
 \value{
 Vector in Date-Time format
-
-
-
-
-
-
-
-
 }
 \description{
 Convert time-slices to date-time, extract year, month, day of the year, or hour
 }
 \section{Functions}{
 \itemize{
-\item \code{tsl2year}: Extract year from time-slices
+\item \code{tsl2year()}: Extract year from time-slices
 
-\item \code{tsl2yday}: Extract the day of the year from time-slices
+\item \code{tsl2yday()}: Extract the day of the year from time-slices
 
-\item \code{tsl2hour}: Extract hour from time-slices
+\item \code{tsl2hour()}: Extract hour from time-slices
 
-\item \code{tsl2month}: Extract month from time-slices
+\item \code{tsl2month()}: Extract month from time-slices
+
 }}
-
 \examples{
 tsl <- c("y2007_d365_h15", NA, "d151_h22", "d001", "m10_h12")
 tsl2dtm(tsl[1])
@@ -77,6 +69,6 @@ tsl
 tsl2yday(tsl)
 tsl
 tsl2hour(tsl)
-tsl
-tsl2month(tsl)
+tsl2month(c("d001_h00", "d151_h22", "d365_h23"))
+tsl2month(c("m01_h12", "m05_h02", "m10_h01"))
 }

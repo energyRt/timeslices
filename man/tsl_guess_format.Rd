@@ -9,9 +9,6 @@ tsl_guess_format(tsl)
 \arguments{
 \item{tsl}{}
 }
-\value{
-
-}
 \description{
 Guess format of time-slices
 }
@@ -22,4 +19,5 @@ tsl_guess_format(tsl[1])
 tsl_guess_format(tsl[2])
 tsl_guess_format(tsl[3])
 tsl_guess_format(tsl[4])
+tsl_guess_format(tsl[5])
 }
